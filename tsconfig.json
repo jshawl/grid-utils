@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "moduleResolution": "node",
     "strict": true,
     "skipLibCheck": true,
     "lib": [
       "es2019"
     ],
-    "outDir": "./dist"
+    "outDir": "./dist",
   },
+  "exclude": [
+    "*.test.ts"
+  ]
 }
