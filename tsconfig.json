@@ -4,8 +4,15 @@
     "moduleResolution": "node",
     "strict": true,
     "skipLibCheck": true,
-    "lib": ["es2019"],
-    "outDir": "./dist"
+    "lib": [
+      "es2019"
+    ],
+    "outDir": "./dist",
+    "module": "esnext",
+    "target": "esnext"
   },
-  "exclude": ["*.test.ts", "dist"]
+  "exclude": [
+    "*.test.ts",
+    "dist"
+  ]
 }

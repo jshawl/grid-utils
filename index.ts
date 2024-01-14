@@ -11,7 +11,7 @@ type Options = {
 export const grid = ({
   rows,
   columns = rows,
-  initialize = (e) => e,
+  initialize = (_) => undefined,
 }: Options) => {
   return [...Array(rows)].map((row, rowi) =>
     [...Array(columns)].map((col, coli) => initialize(coli, rowi)),

@@ -40,7 +40,7 @@ test("initializes the grid with a space-aware value", () => {
 });
 
 test("each", () => {
-  const g = grid({ rows: 4 });
+  const g = grid({ rows: 4, initialize: () => 0 });
   const predicate = vi.fn();
   const eached = each(g, predicate);
   expect(predicate).toHaveBeenCalledTimes(16);
