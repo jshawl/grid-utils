@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "lib": [
+      "es2019"
+    ],
+    "outDir": "./dist"
+  },
+}

@@ -28,7 +28,7 @@ test('initializes the grid with a value', () => {
 
 test('initializes the grid with a space-aware value', () => {
   const random = Math.random()
-  const initialize = (col, row) => ({ col, row, value: random })
+  const initialize = (col: number, row: number) => ({ col, row, value: random })
   const g = grid({ rows: 4, initialize })
   expect(g[0][0]).toEqual({ col: 0, row: 0, value: random })
   expect(g[3][1]).toEqual({ col: 1, row: 3, value: random })

@@ -1,7 +1,11 @@
+type Grid = unknown[][];
+
+type Predicate = (value: unknown, coli: number, rowi: number) => unknown;
+
 type Options = {
   rows: number;
   columns?: number;
-  initialize?: (col?: number, row?: number) => unknown;
+  initialize?: (col: number, row: number) => unknown;
 }
 
 export const grid = ({
@@ -14,7 +18,7 @@ export const grid = ({
       .map((col, coli) => initialize(coli, rowi)))
 }
 
-export const map = (grid, predicate) => {
+export const map = (grid: Grid, predicate: Predicate) => {
   return grid.map((row, rowi) => row.map((col, coli) => {
     return predicate(col, coli, rowi)
   }))
@@ -32,7 +36,7 @@ export const parse = (text: string) => {
   return text.trim().split("\n").map(row => row.split(""))
 }
 
-export const inGrid = (grid, coord) => {
+export const inGrid = (grid: Grid, coord: number[]) => {
   const [row, col] = coord;
   return col >= 0 && col < grid[0].length && row >= 0 && row < grid.length
 }
@@ -44,7 +48,7 @@ const directions = [
   [-1, 0]
 ]
 
-export const neighbors = (grid, coord: number[]) => directions.reduce((acc: number[][], el) => {
+export const neighbors = (grid: Grid, coord: number[]) => directions.reduce((acc: number[][], el) => {
   const [col, row] = el
   const [coordcol, coordrow] = coord
   const neighborcol = coordcol + col
@@ -56,12 +60,12 @@ export const neighbors = (grid, coord: number[]) => directions.reduce((acc: numb
 }, []);
 
 type Direction = (
-  grid,
+  grid: Grid,
   [col, row]: number[],
   all?: number[][]
 ) => number[][]
 
-const direction = ([dcol, drow]) => {
+const direction = ([dcol, drow]: number[]) => {
   const fn: Direction = (
     grid,
     [col, row],
