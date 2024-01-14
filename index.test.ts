@@ -3,7 +3,6 @@ import {
   grid,
   each,
   map,
-  reduce,
   parse,
   neighbors,
   inGrid,
