@@ -11,6 +11,7 @@ import {
   bottom,
   left,
   columns,
+  find,
 } from ".";
 
 test("builds a square grid", () => {
@@ -129,4 +130,12 @@ test("columns", () => {
     ["a", "c", "e"],
     ["b", "d", "f"],
   ]);
+});
+
+test("find", () => {
+  const g = parse("abc\ndef\nghi\n");
+  expect(find(g, (e) => e === "a")).toEqual([0, 0]);
+  expect(find(g, (e) => e === "d")).toEqual([0, 1]);
+  expect(find(g, (e) => e === "i")).toEqual([2, 2]);
+  expect(() => find(g, () => false)).toThrowError("Element not found");
 });

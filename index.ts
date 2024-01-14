@@ -91,3 +91,16 @@ export const left = direction([-1, 0]);
 export const columns = (grid: Grid) => {
   return grid[0].map((_, coli) => grid.map((_, rowi) => grid[rowi][coli]));
 };
+
+export const find = (grid: Grid, predicate: <T>(e: T) => boolean) => {
+  let coli, rowi;
+  grid.findIndex((g, i) => {
+    rowi = i;
+    coli = g.findIndex(predicate);
+    return coli !== -1;
+  });
+  if (coli === -1) {
+    throw new Error("Element not found");
+  }
+  return [coli, rowi];
+};
