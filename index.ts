@@ -26,10 +26,7 @@ export const map = (grid: Grid, predicate: Predicate) => {
   );
 };
 
-export const each = (
-  grid: unknown[][],
-  predicate: (col: unknown, coli: number, rowi: number) => unknown,
-) => {
+export const each = (grid: unknown[][], predicate: Predicate) => {
   map(grid, predicate);
   return grid;
 };
@@ -92,11 +89,14 @@ export const columns = (grid: Grid) => {
   return grid[0].map((_, coli) => grid.map((_, rowi) => grid[rowi][coli]));
 };
 
-export const find = (grid: Grid, predicate: <T>(e: T) => boolean) => {
-  let coli, rowi;
+export const find = (grid: Grid, predicate: Predicate) => {
+  let coli!: number;
+  let rowi!: number;
   grid.findIndex((g, i) => {
     rowi = i;
-    coli = g.findIndex(predicate);
+    coli = g.findIndex((element, index) => {
+      return predicate(element, index, rowi);
+    });
     return coli !== -1;
   });
   if (coli === -1) {
@@ -106,20 +106,20 @@ export const find = (grid: Grid, predicate: <T>(e: T) => boolean) => {
 };
 
 export const subgrids = (grid: Grid, number: number) => {
-  const size = Math.sqrt(number)
+  const size = Math.sqrt(number);
   if (!Number.isSafeInteger(size)) {
-    throw new Error('Cannot evenly divide subgrid')
+    throw new Error("Cannot evenly divide subgrid");
   }
-  const out: unknown[][][][] = []
+  const out: unknown[][][][] = [];
   each(grid, (col, coli, rowi) => {
-    const srowi = Math.floor(rowi / size)
-    const scoli = Math.floor(coli / size)
-    const ssrowi = rowi % size
+    const srowi = Math.floor(rowi / size);
+    const scoli = Math.floor(coli / size);
+    const ssrowi = rowi % size;
 
-    out[srowi] = out[srowi] || []
-    out[srowi][scoli] = out[srowi][scoli] || []
-    out[srowi][scoli][ssrowi] = out[srowi][scoli][ssrowi] || []
-    out[srowi][scoli][ssrowi].push(col)
-  })
-  return out
-}
+    out[srowi] = out[srowi] || [];
+    out[srowi][scoli] = out[srowi][scoli] || [];
+    out[srowi][scoli][ssrowi] = out[srowi][scoli][ssrowi] || [];
+    out[srowi][scoli][ssrowi].push(col);
+  });
+  return out;
+};

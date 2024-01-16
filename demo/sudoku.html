@@ -33,7 +33,6 @@
   pre div span:nth-child(6) {
     border-right: 1px solid black;
   }
-
 </style>
 <script type="module">
   import { grid, find, columns, subgrids } from "../dist/index.js";
@@ -47,38 +46,42 @@
     [0, 5, 0, 9, 0, 4, 0, 8, 2],
     [0, 0, 9, 0, 0, 8, 0, 5, 3],
     [0, 0, 0, 0, 0, 0, 2, 0, 0],
-    [8, 0, 0, 3, 0, 0, 1, 0, 0]
-  ]
+    [8, 0, 0, 3, 0, 0, 1, 0, 0],
+  ];
 
   const render = (grid) => {
-    document.querySelector("pre").innerHTML = grid.
-      map(row => `<div>${row.map(e => `<span>${e || ' '}</span>`).join("")}</div>`).join("")
-  }
+    document.querySelector("pre").innerHTML = grid
+      .map(
+        (row) =>
+          `<div>${row.map((e) => `<span>${e || " "}</span>`).join("")}</div>`,
+      )
+      .join("");
+  };
 
-  const sum = (arr) => arr.reduce((acc, el) => acc + el, 0)
+  const sum = (arr) => arr.reduce((acc, el) => acc + el, 0);
 
   const noDuplicates = (arr) => {
-    const a = arr.filter(e => e !== 0)
-    return a.length === new Set(a).size
-  }
+    const a = arr.filter((e) => e !== 0);
+    return a.length === new Set(a).size;
+  };
 
   const valid = (grid) => {
-    const subgridsValid = subgrids(grid, 9).every(noDuplicates)
-    if (!subgridsValid) return false
-    const rowsValid = grid.every(noDuplicates)
-    if (!rowsValid) return false
-    const colsValid = columns(grid).every(noDuplicates)
-    if (!colsValid) return false
-    return true
-  }
+    const subgridsValid = subgrids(grid, 9).every(noDuplicates);
+    if (!subgridsValid) return false;
+    const rowsValid = grid.every(noDuplicates);
+    if (!rowsValid) return false;
+    const colsValid = columns(grid).every(noDuplicates);
+    if (!colsValid) return false;
+    return true;
+  };
 
   const fill = (grid, stack, current) => {
-    stack.push(current || find(grid, e => e === 0))
+    stack.push(current || find(grid, (e) => e === 0));
     const [x, y] = stack.at(-1);
     for (let i = grid[y][x]; i < 9; i++) {
-      grid[y][x]++
+      grid[y][x]++;
       if (valid(grid)) {
-        return
+        return;
       }
     }
 
@@ -86,21 +89,20 @@
     stack.pop(); // current is removed
     current = stack.pop(); // and reassigned to the previous current
     return current;
-  }
-  const start = (new Date()).getTime()
+  };
+  const start = new Date().getTime();
   const backtrack = ({ grid, current, stack = [], i = 0 }) => {
     try {
-      current = fill(grid, stack, current)
+      current = fill(grid, stack, current);
     } catch (e) {
-      const finish = (new Date()).getTime()
-      console.log((finish - start) / 1000)
-      return
+      const finish = new Date().getTime();
+      console.log((finish - start) / 1000);
+      return;
     }
-    console.log(++i)
-    render(grid)
-    setTimeout(() => backtrack({ grid, current, stack, i }), 0)
-  }
+    console.log(++i);
+    render(grid);
+    setTimeout(() => backtrack({ grid, current, stack, i }), 0);
+  };
 
-  backtrack({ grid: g })
-
+  backtrack({ grid: g });
 </script>
