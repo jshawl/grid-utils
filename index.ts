@@ -104,3 +104,22 @@ export const find = (grid: Grid, predicate: <T>(e: T) => boolean) => {
   }
   return [coli, rowi];
 };
+
+export const subgrids = (grid: Grid, number: number) => {
+  const size = Math.sqrt(number)
+  if (!Number.isSafeInteger(size)) {
+    throw new Error('Cannot evenly divide subgrid')
+  }
+  const out: unknown[][][][] = []
+  each(grid, (col, coli, rowi) => {
+    const srowi = Math.floor(rowi / size)
+    const scoli = Math.floor(coli / size)
+    const ssrowi = rowi % size
+
+    out[srowi] = out[srowi] || []
+    out[srowi][scoli] = out[srowi][scoli] || []
+    out[srowi][scoli][ssrowi] = out[srowi][scoli][ssrowi] || []
+    out[srowi][scoli][ssrowi].push(col)
+  })
+  return out
+}

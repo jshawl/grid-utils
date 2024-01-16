@@ -12,6 +12,7 @@ import {
   left,
   columns,
   find,
+  subgrids
 } from ".";
 
 test("builds a square grid", () => {
@@ -139,3 +140,14 @@ test("find", () => {
   expect(find(g, (e) => e === "i")).toEqual([2, 2]);
   expect(() => find(g, () => false)).toThrowError("Element not found");
 });
+
+test("subgrids", () => {
+  const g = parse("abcd\nefgh\nijkl\nmnop\n")
+  const subs = subgrids(g, 4)
+  expect(subs[0][0]).toEqual([
+    ["a", "b"],
+    ["e", "f"]
+  ])
+
+  expect(() => subgrids(g, 3)).toThrowError()
+})
